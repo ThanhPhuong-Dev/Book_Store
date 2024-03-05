@@ -1,9 +1,11 @@
 import CardComponent from '~/components/CardComponent/CardComponent';
 import SwiperComponent from '~/components/Swiper/SwiperComponent';
 import styles from '~/components/CssComponents/Home.module.scss';
+
 function Home() {
+  
   return (
-    <div>
+    <div className={styles.container}>
       <SwiperComponent></SwiperComponent>
       <div className={styles.wrapper}>
         <div className={styles.wrapper_card}>

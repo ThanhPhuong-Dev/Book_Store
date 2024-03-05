@@ -1,0 +1,118 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+.product {
+}
+
+.product_header {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('http://wp.acmeedesign.com/bookstore/wp-content/uploads/2016/01/title.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  h1 {
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: $white-color;
+    text-shadow: 1px 1px 1px black;
+  }
+}
+
+.product_title {
+  color: $white-color;
+  font-size: 1.6rem;
+  text-shadow: 1px 1px 1px black;
+}
+
+.product_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product_wrapper {
+  width: 1200px;
+  display: flex;
+  // background-color: #ccc;
+  padding: 20px 0 50px 0;
+}
+
+.product_images {
+  width: 42%;
+  border-right: 2px solid #ccc;
+  .product_images_image {
+    text-align: center;
+    width: 350px;
+    height: 450px;
+    padding: 10px 20px;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.product_content {
+  padding: 20px;
+  overflow: hidden;
+  h1 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: $text-color;
+  }
+  h3 {
+    margin-bottom: 30px;
+    color: $primary-color;
+    font-size: 1.9rem;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  p {
+    font-size: 1.6rem;
+    padding: 20px 0;
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.product_action {
+  display: flex;
+  flex-direction: column;
+}
+
+.product_salary {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  h4 {
+    font-size: 1.8rem;
+    color: var(--text);
+    margin-right: 10px;
+  }
+  .product_icon {
+    font-size: 3rem;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+
+    &:active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+  }
+  span {
+    font-size: 1.55rem;
+    border: 1px solid var(--primary);
+    padding: 6px 10px;
+  }
+}
+
+.product_buy {
+  display: flex;
+}

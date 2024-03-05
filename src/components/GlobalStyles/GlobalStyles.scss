@@ -5,6 +5,14 @@ $primary-color: #27ae61;
 $white-color: #ffffff;
 $text-color: #333333;
 $hover-color: #2c3e50;
+$header-height: 60px;
+:root {
+  --primary: #27ae61;
+  --black: #000;
+  --white: #fff;
+  --text-color: #333;
+  --hover-color: #2c3e50;
+}
 html,
 body {
   font-size: 62.5%;
@@ -13,4 +21,8 @@ body {
 body {
   font-family: 'Roboto', sans-serif;
   color: $text-color;
+}
+
+.container_children {
+  margin-top: $header-height;
 }

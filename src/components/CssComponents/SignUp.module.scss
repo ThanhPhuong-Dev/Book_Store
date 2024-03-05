@@ -1,0 +1,81 @@
+.signUp_header {
+  width: 100%;
+  // height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  // background-image: url('http://wp.acmeedesign.com/bookstore/wp-content/uploads/2016/02/Bookshelf-1200.jpg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
+  h1 {
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 1px 1px 1px black;
+  }
+}
+
+.signUp_title {
+  color: var(--white);
+  font-size: 1.6rem;
+  text-shadow: 1px 1px 1px black;
+}
+
+.signUp_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  background-image: url('https://img.freepik.com/free-photo/cafe-frankfurt-germany_1268-20912.jpg?t=st=1709644810~exp=1709648410~hmac=57d69bd1bcedf5580ae7720c277f8ad1343e34f8b89c03541d61352ea1db1fbd&w=1060');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.signUp_form {
+  width: 500px;
+  padding: 40px 20px;
+  // background-image: url('https://img.freepik.com/free-photo/book-that-has-word-mountain-it_188544-12612.jpg?t=st=1709644264~exp=1709647864~hmac=c657158cfd219148eae3bef0e4a3ea8237846f8b8bc4023c6090e1892ecd0081&w=1380');
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  background-color: white;
+  box-shadow: 0px 1px 8px black;
+  border-radius: 10px;
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: var(--text);
+  }
+  span {
+    color: var(--text);
+  }
+  p {
+    color: var(--text);
+    font-size: 1.6rem;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+}
+
+.signUp_btn {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    padding: 10px 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--primary);
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+    }
+  }
+}

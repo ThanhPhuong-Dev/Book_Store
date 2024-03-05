@@ -1,0 +1,25 @@
+.modal {
+  position: fixed;
+  content: '';
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal_login {
+  width: 400px;
+  position: absolute;
+  content: '';
+  top: 50%;
+  right: 50%;
+  transform: translate(150px, -237px);
+  background-color: white;
+  margin: auto;
+}
+
+.modal_login_password {
+  display: flex;
+}

@@ -1,0 +1,78 @@
+.login_header {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('http://wp.acmeedesign.com/bookstore/wp-content/uploads/2016/02/Bookshelf-1200.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  h1 {
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 1px 1px 1px black;
+  }
+}
+
+.login_title {
+  color: var(--white);
+  font-size: 1.6rem;
+  text-shadow: 1px 1px 1px black;
+}
+
+.login_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px - 170px);
+  // background-image: url('https://img.freepik.com/free-photo/boards-with-unfocused-background_1253-55.jpg?t=st=1709644006~exp=1709647606~hmac=f7fd8b996e2bd911cd268c03ed7f7d4bc41afb0d3209879497c200b9eb3ea441&w=996');
+  // background-size: contain;
+  // background-repeat: no-repeat;
+}
+
+.login_form {
+  width: 500px;
+  padding: 40px 20px;
+  background-image: url('https://img.freepik.com/free-photo/book-that-has-word-mountain-it_188544-12612.jpg?t=st=1709644264~exp=1709647864~hmac=c657158cfd219148eae3bef0e4a3ea8237846f8b8bc4023c6090e1892ecd0081&w=1380');
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0px 1px 8px black;
+  border-radius: 10px;
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: var(--white);
+  }
+  span {
+    color: var(--white);
+  }
+  p {
+    color: var(--white);
+    font-size: 1.6rem;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+}
+
+.login_btn {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    padding: 10px 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text);
+    background-color: #fdecc3;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fdecc3;
+    }
+  }
+}
