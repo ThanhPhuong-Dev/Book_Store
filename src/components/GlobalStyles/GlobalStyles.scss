@@ -1,0 +1,16 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+$primary-color: #27ae61;
+$white-color: #ffffff;
+$text-color: #333333;
+$hover-color: #2c3e50;
+html,
+body {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: $text-color;
+}
