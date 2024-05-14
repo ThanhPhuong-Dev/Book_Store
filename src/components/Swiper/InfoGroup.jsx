@@ -2,9 +2,9 @@ import styles from '~/components/CssComponents/SwiperComponent.module.scss';
 
 function InfoGroup() {
   return (
-    <div className={styles.info}>
-      <h1>Thành Viên</h1>
-      <div className={styles.groupName}>
+    <div className="absolute bottom-0 bg-green-600 h-24 flex items-center text-3xl text-white font-bold w-full px-8">
+      <h1 className="pr-4 border-r-[2px] border-r-[#ccc]">Thành Viên</h1>
+      <div className="flex flex-1 justify-between items-center pl-4">
         <p>Hồ Văn Thanh Phương</p>
         <p>Hồ Văn Thanh Phương</p>
         <p>Hồ Văn Thanh Phương</p>

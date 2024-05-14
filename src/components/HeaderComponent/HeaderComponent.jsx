@@ -3,9 +3,15 @@ import styles from '../CssComponents/HeaderComponent.module.scss';
 import { FaShoppingCart } from 'react-icons/fa';
 import SearchComponent from './SearchComponent';
 import { useNavigate } from 'react-router-dom';
+import AvatarComponent from '../AvatarComponent/AvatarComponent';
+import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Typography } from 'antd';
+import PersonIcon from '@mui/icons-material/Person';
 
 function HeaderComponent() {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   return (
     <>
       <div className={styles.headers}>
@@ -21,9 +27,39 @@ function HeaderComponent() {
 
           <div className={styles.action}>
             <h1 className={styles.home}>Trang Chủ</h1>
-            <h1 className={styles.home} onClick={() => navigate('/login')}>
-              Đăng Nhập
-            </h1>
+            {user?.name ? (
+              <AvatarComponent user={user}></AvatarComponent>
+            ) : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  border: '2px solid #95a5a6',
+                  px: 2,
+                  gap: 1,
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  transition: '0.5s',
+
+                  '&:hover': {
+                    background: '#cca77f'
+                  },
+                  '& .MuiSvgIcon-root': {
+                    fontSize: '3rem',
+                    color: 'white'
+                  },
+                  '& .MuiTypography-root': {
+                    fontSize: '1.6rem',
+                    color: 'white'
+                  }
+                }}
+              >
+                <PersonIcon></PersonIcon>
+                <Typography variant="inherit" onClick={() => navigate('/login')}>
+                  Tài Khoản
+                </Typography>
+              </Box>
+            )}
             <FaShoppingCart className={styles.shoppingCart}></FaShoppingCart>
           </div>
         </div>

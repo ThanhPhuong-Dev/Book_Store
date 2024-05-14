@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-// https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [react()],
 
   resolve: {
-    alias: [{ find: '~', replacement: '/src' }]
+    alias: {
+      '~': '/src' // Sửa thành định dạng object với key là "~" và value là "/src"
+    }
   }
 });
