@@ -42,15 +42,12 @@ function AdminProduct() {
   const [otherUpdateType, setOtherUpdateType] = useState('');
 
   const [stateProduct, setStateProduct] = useState({
-    name: '',
-    type: '',
-    countInStock: '',
-    price: '',
-    description: '',
-    rating: 1,
-    location: '',
-    discount: '',
-    sold: ''
+    ISBN: '',
+    bookTitle: '',
+    bookAuthor: '',
+    yearPublication: '',
+    Publisher: '',
+    image: ''
   });
   const [stateUpdateProduct, setStateUpdateProduct] = useState({
     name: '',
@@ -88,30 +85,11 @@ function AdminProduct() {
       console.log('erre', error);
     }
   };
-  const fetchTypeProduct = async () => {
-    const res = await ProductServices.typeProduct();
-    return res;
-  };
 
   const ProductQuery = useQuery(['products'], fetchGetDataProduct);
-  const TypeQuery = useQuery(['type-product'], fetchTypeProduct);
-  const { data: dataTypeProduct } = TypeQuery;
   const { isLoading: LoadingProduct, data: productData } = ProductQuery;
-  // const dataTable =
-  //   productData?.data.length &&
-  //   productData?.data?.map((product) => {
-  //     return { ...product, key: product._id };
-  //   });
-  const dataTable = productData && productData?.data;
 
-  useEffect(() => {
-    if (!ProductQuery.data && !ProductQuery.isLoading) {
-      fetchGetDataProduct();
-    }
-    if (!dataTypeProduct && !TypeQuery.isLoading) {
-      fetchTypeProduct();
-    }
-  }, [ProductQuery, TypeQuery]);
+  const dataTable = productData && productData?.data;
 
   const renderAction = () => {
     return (
@@ -340,15 +318,53 @@ function AdminProduct() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // const formdata = new FormData();
-      // formdata.append('image', file);
-      setStateProduct({
-        ...stateProduct,
-        image: file
-      });
       const reader = new FileReader();
       reader.onload = (event) => {
-        setOtherImage(event.target.result);
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          // Thiết lập kích thước mới cho ảnh
+          const MAX_WIDTH = 800; // Chiều rộng tối đa
+          const MAX_HEIGHT = 800; // Chiều cao tối đa
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          // Vẽ ảnh lên canvas
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Chuyển đổi ảnh trên canvas thành base64 với chất lượng thấp hơn
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.7); // Chất lượng 0.7 (70%)
+          setOtherImage(dataUrl);
+
+          // Chuyển base64 thành file để upload
+          fetch(dataUrl)
+            .then((res) => res.blob())
+            .then((blob) => {
+              const newFile = new File([blob], file.name, { type: 'image/jpeg' });
+              setStateProduct({
+                ...stateProduct,
+                image: newFile
+              });
+            });
+        };
+        img.src = event.target.result;
       };
       reader.readAsDataURL(file);
     }
@@ -403,62 +419,21 @@ function AdminProduct() {
   //submit
   const handleSubmitFormNew = (e) => {
     e.preventDefault();
-    const formdata = new FormData();
-    formdata.append('image', stateProduct.image);
-    if (otherType) {
-      mutation.mutate(
-        { ...stateProduct, type: otherType, formdata },
-        {
-          onSettled: () => {
-            ProductQuery.refetch();
-          }
+
+    mutation.mutate(
+      {
+        ...stateProduct,
+        image: otherImage
+      },
+      {
+        onSettled: () => {
+          ProductQuery.refetch();
         }
-      );
-      setOtherType('');
-    } else {
-      mutation.mutate(
-        { ...stateProduct, formdata },
-        {
-          onSettled: () => {
-            ProductQuery.refetch();
-          }
-        }
-      );
-    }
+      }
+    );
   };
   //4end-------------Khi Tạo Bảng về nhập dữ liệu vào submit để tạo sản phẩm mới-------
 
-  const handleSelectedType = (e) => {
-    const typeName = e.target.value;
-    setSelectedType(typeName);
-    if (typeName === 'other-type') {
-      setOtherType('');
-    } else {
-      setStateProduct({
-        ...stateProduct,
-        type: typeName
-      });
-    }
-  };
-  const handleAddType = (e) => {
-    setOtherType(e.target.value);
-  };
-
-  const handleSelectedUpdateType = (e) => {
-    const typeName = e.target.value;
-    setSelectedType(typeName);
-    if (typeName === 'other-type') {
-      setOtherUpdateType('');
-    } else {
-      setStateUpdateProduct({
-        ...stateUpdateProduct,
-        type: typeName
-      });
-    }
-  };
-  const handleAddUpdateType = (e) => {
-    setOtherUpdateType(e.target.value);
-  };
   return (
     <>
       <Spin spinning={loading}>
@@ -524,10 +499,10 @@ function AdminProduct() {
               </Box>
               <form onSubmit={handleSubmitFormNew}>
                 <InputComponent
-                  label="Name"
-                  id="name"
-                  name="name"
-                  value={stateProduct.name}
+                  label="ISBN"
+                  id="ISBN"
+                  name="ISBN"
+                  value={stateProduct.ISBN}
                   handleChange={handleChangeProduct}
                   width="350px"
                 ></InputComponent>
@@ -539,99 +514,40 @@ function AdminProduct() {
               handleChange={handleChangeProduct}
               width="350px"
             ></InputComponent> */}
-                <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Typography sx={{ fontSize: '1.4rem', fontWeight: 600 }}>Type</Typography>
-                  <FormControl sx={{ width: '350px' }}>
-                    <Select id="type" name="type" value={selectedType} onChange={handleSelectedType}>
-                      {dataTypeProduct?.data.map((type, index) => (
-                        <MenuItem key={index} value={type}>
-                          {type}
-                        </MenuItem>
-                      ))}
-                      <MenuItem value="other-type">Thêm Type</MenuItem>
-                    </Select>
-                    {selectedType === 'other-type' && (
-                      <input
-                        style={{ width: '350px', height: '43px', marginTop: '10px' }}
-                        value={otherType}
-                        onChange={handleAddType}
-                        name={selectedType === 'other-type' ? 'type' : ''}
-                      ></input>
-                    )}
-                  </FormControl>
-                </Box>
 
                 <InputComponent
-                  label="Count In Stock"
-                  id="countInStock"
-                  name="countInStock"
-                  value={stateProduct.countInStock}
+                  label="Book-Title"
+                  id="bookTitle"
+                  name="bookTitle"
+                  value={stateProduct.bookTitle}
                   handleChange={handleChangeProduct}
                   width="350px"
                 ></InputComponent>
                 <InputComponent
-                  label="Price"
-                  id="price"
-                  name="price"
-                  value={stateProduct.price}
+                  label="Book-Author"
+                  id="bookAuthor"
+                  name="bookAuthor"
+                  value={stateProduct.bookAuthor}
                   handleChange={handleChangeProduct}
                   width="350px"
                 ></InputComponent>
                 <InputComponent
-                  label="Description"
-                  id="description"
-                  name="description"
-                  value={stateProduct.description}
+                  label="Year"
+                  id="yearPublication"
+                  name="yearPublication"
+                  value={stateProduct.yearPublication}
                   handleChange={handleChangeProduct}
                   width="350px"
                 ></InputComponent>
                 <InputComponent
-                  label="Location"
-                  id="location"
-                  name="location"
-                  value={stateProduct.location}
+                  label="Publisher"
+                  id="Publisher"
+                  name="Publisher"
+                  value={stateProduct.Publisher}
                   handleChange={handleChangeProduct}
                   width="350px"
                 ></InputComponent>
-                <InputComponent
-                  label="Discount"
-                  id="discount"
-                  name="discount"
-                  value={stateProduct.discount}
-                  handleChange={handleChangeProduct}
-                  width="350px"
-                ></InputComponent>
-                <InputComponent
-                  label="Sold"
-                  id="sold"
-                  name="sold"
-                  value={stateProduct.sold}
-                  handleChange={handleChangeProduct}
-                  width="350px"
-                ></InputComponent>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mb: 2,
-                    '& .MuiTypography-root': {
-                      fontSize: '1.4rem',
-                      fontWeight: 600,
-                      mr: 6
-                    },
-                    '& .MuiRating-root': {
-                      fontSize: '2.4rem'
-                    }
-                  }}
-                >
-                  <Typography>Rating</Typography>
-                  <Rating
-                    id="rating"
-                    name="rating"
-                    value={parseInt(stateProduct.rating)}
-                    onChange={handleChangeProduct}
-                  ></Rating>
-                </Box>
+
                 <Box sx={{ display: 'flex', mb: 2, alignItems: 'center' }}>
                   <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, mr: 6 }}>Image</Typography>
                   <UploadComponent handleImageChange={handleImageChange}></UploadComponent>
@@ -661,20 +577,20 @@ function AdminProduct() {
                     Thoát
                   </Button>
                   <Button
-                    disabled={
-                      stateProduct.name &&
-                      stateProduct.countInStock &&
-                      stateProduct.description &&
-                      stateProduct.discount &&
-                      stateProduct.location &&
-                      stateProduct.price &&
-                      stateProduct.rating &&
-                      stateProduct.sold &&
-                      (stateProduct.type || otherType) &&
-                      stateProduct.image
-                        ? false
-                        : true
-                    }
+                    // disabled={
+                    //   stateProduct.name &&
+                    //   stateProduct.countInStock &&
+                    //   stateProduct.description &&
+                    //   stateProduct.discount &&
+                    //   stateProduct.location &&
+                    //   stateProduct.price &&
+                    //   stateProduct.rating &&
+                    //   stateProduct.sold &&
+                    //   (stateProduct.type || otherType) &&
+                    //   stateProduct.image
+                    //     ? false
+                    //     : true
+                    // }
                     variant="contained"
                     type="submit"
                     sx={{ backgroundColor: '#34495e' }}
@@ -731,33 +647,7 @@ function AdminProduct() {
                   handleChange={handleChangeProductDetails}
                   width="350px"
                 ></InputComponent>
-                <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Typography sx={{ fontSize: '1.4rem', fontWeight: 600 }}>Type</Typography>
-                  <FormControl sx={{ width: '350px' }}>
-                    <Select
-                      id="type"
-                      name="type"
-                      value={stateUpdateProduct.type}
-                      onChange={handleSelectedUpdateType}
-                      defaultValue={stateUpdateProduct?.type}
-                    >
-                      {dataTypeProduct?.data.map((type, index) => (
-                        <MenuItem key={index} value={type}>
-                          {type}
-                        </MenuItem>
-                      ))}
-                      <MenuItem value="other-type">Thêm Type</MenuItem>
-                    </Select>
-                    {selectedType === 'other-type' && (
-                      <input
-                        style={{ width: '350px', height: '43px', marginTop: '10px' }}
-                        value={otherUpdateType}
-                        onChange={handleAddUpdateType}
-                        name={selectedType === 'other-type' ? 'type' : ''}
-                      ></input>
-                    )}
-                  </FormControl>
-                </Box>
+
                 <InputComponent
                   label="Count In Stock"
                   id="countInStock"

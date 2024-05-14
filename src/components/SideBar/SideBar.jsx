@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import StoreIcon from '@mui/icons-material/Store';
 import AdminUser from '~/page/AdminPage/AdminComponent/AdminUser';
 import AdminProduct from '~/page/AdminPage/AdminComponent/AdminProduct';
+import AdminOrder from '~/page/AdminPage/AdminComponent/AdminOrder';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -224,7 +225,7 @@ function SideBar() {
       <Box component="main" sx={{ flexGrow: 1, p: 3, height: '100vh' }}>
         {menudata === 'AdminUser' && <AdminUser></AdminUser>}
         {menudata === 'AdminProduct' && <AdminProduct></AdminProduct>}
-        {/* {menudata === 'AdminOrder' && <AdminOrder></AdminOrder>} */}
+        {menudata === 'AdminOrder' && <AdminOrder></AdminOrder>}
       </Box>
     </Box>
   );
