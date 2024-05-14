@@ -9,23 +9,13 @@ export const getAllProduct = async (limit) => {
 };
 
 export const createProduct = async (data) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/product/create`,
-    {
-      ...data
-    },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
-  );
+  const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/book/create_book`, data);
   return res.data;
 };
 
 export const updateProduct = async (id, access_token, data) => {
   const res = await axios.put(
-    `${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/product/update/${id}`,
+    `${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/book/update_book/${id}`,
     { ...data },
     {
       headers: {
@@ -37,12 +27,8 @@ export const updateProduct = async (id, access_token, data) => {
   return res.data;
 };
 
-export const removeProduct = async (id, access_token) => {
-  const res = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/product/delete/${id}`, {
-    headers: {
-      access_token: `Beare ${access_token}`
-    }
-  });
+export const removeProduct = async (id) => {
+  const res = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/book/delete_book/${id}`);
   return res.data;
 };
 export const removeProductAll = async (data, access_token) => {
@@ -61,9 +47,7 @@ export const getProductDetails = async (id) => {
 };
 
 export const searchProduct = async (filter) => {
-  const res = await axios.get(
-    `${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/product/searchProduct?filter=name&filter=${filter}`
-  );
+  const res = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/book/search?filter=${filter}`);
   return res.data;
 };
 
