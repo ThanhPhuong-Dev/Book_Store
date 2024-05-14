@@ -4,10 +4,10 @@ import styles from '~/components/CssComponents/Home.module.scss';
 
 function DefaultLayout({ children }) {
   return (
-    <div>
+    <div className="h-screen flex flex-col">
       <HeaderComponent></HeaderComponent>
       <div className={styles.container_children}>{children}</div>
-      <FooterComponent></FooterComponent>
+      {/* <FooterComponent></FooterComponent> */}
     </div>
   );
 }
