@@ -22,6 +22,7 @@ import UploadComponent from '~/components/InputComponent/UploadComponent/UploadC
 import RadioProfile from '~/components/RadioProfile/RadioProfile';
 import { useMutationHook } from '~/hooks/useMutationHook';
 import * as Toast from '~/utils/notification';
+import { WrapperTable } from '~/components/CssComponents/styledTable';
 // import LoadingComponent from '~/components/LoadingComponent/LoadingComponent';
 function AdminUser() {
   const [openRemoveModal, setOpenRemoveModal] = useState(false);

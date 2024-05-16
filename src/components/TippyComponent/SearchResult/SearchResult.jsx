@@ -43,7 +43,7 @@ function SearchResult({ product, handleHide }) {
           {name}
         </Typography>
         <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, lineHeight: 1.4, color: 'red' }}>
-          {ISBN ? Number(ISBN / 1000).toLocaleString() : '120.000'}VND
+          {ISBN ? Number(ISBN / 100000).toLocaleString() : '120.000'}VND
         </Typography>
       </Box>
     </Box>

@@ -8,6 +8,7 @@ import * as UserServices from './services/useService';
 import { useDispatch, useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import { updateUser } from './redux/Silde/userSilde';
+import { ToastContainer } from 'react-toastify';
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -42,6 +43,7 @@ function App() {
   };
   return (
     <Router>
+      <ToastContainer position="right"></ToastContainer>
       <ScrollToTop></ScrollToTop>
       <Routes>
         {publicRouter.map((route) => {

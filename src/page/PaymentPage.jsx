@@ -76,10 +76,9 @@ function PaymentPage() {
   //   dispatch(addOrderUser({ orderItemSelected: order?.orderItemSelected }));
   // }, []);
 
-  const accessUser = localStorage.getItem('access_token');
   const priceMemo = useMemo(() => {
     const result = order?.orderItemSelected?.reduce((total, item) => {
-      return total + item.price * item.amount;
+      return total + Number(item?.price) * item.amount;
     }, 0);
 
     return result;
@@ -99,13 +98,11 @@ function PaymentPage() {
     if (priceMemo < 10.0 && priceMemo > 1) {
       return 10.0;
     } else if (priceMemo > 10.0 && priceMemo < 500.0) {
-      return 20.0;
+      return 200;
     } else if (priceMemo === 0) {
       return 0;
-    } else if (priceMemo > 500.0 && priceMemo < 1000.0) {
-      return 45.0;
     } else {
-      return Number(150.0 + Number(priceMemo) * 0.01);
+      return 450000;
     }
   }, []);
   const checkDelivery = useMemo(() => {
@@ -381,7 +378,9 @@ function PaymentPage() {
                 }}
               >
                 <Typography>Tạm Tính</Typography>
-                <Typography sx={{ fontWeight: 600 }}>{priceMemo && formatNumber(priceMemo)}đ</Typography>
+                <Typography sx={{ fontWeight: 600 }}>
+                  {priceMemo && Number(priceMemo / 100000).toLocaleString()}đ
+                </Typography>
               </Box>
               <Box
                 sx={{
@@ -441,7 +440,7 @@ function PaymentPage() {
                 <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, mb: 1 }}>Tổng Tiền</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <Typography sx={{ fontWeight: 600, color: 'red', fontSize: '2.4rem' }}>
-                    {totalPriceMemo && formatNumber(totalPriceMemo * 1000)}đ
+                    {totalPriceMemo && Number(totalPriceMemo / 100000).toLocaleString()}đ
                   </Typography>
                 </Box>
               </Box>
