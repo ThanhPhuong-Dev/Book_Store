@@ -25,10 +25,7 @@ function OrderProductComponent({ orderItem, listChecked, setListChecked }) {
     } else {
       setListChecked([...listChecked, e.target.value]);
     }
-
-    
   };
- 
 
   const handleChangeCrement = (type, idProduct) => {
     if (type === 'decrement') {
@@ -88,7 +85,7 @@ function OrderProductComponent({ orderItem, listChecked, setListChecked }) {
       </Grid>
       <Grid container item xs={7}>
         <Grid item xs={4} sx={styleTitleHeader}>
-          <Typography>{formatNumber(orderItem?.price)}đ</Typography>
+          <Typography>{(orderItem?.price / 100000).toLocaleString()}đ</Typography>
         </Grid>
         <Grid item xs={3} sx={styleTitleHeader}>
           <Box
@@ -124,7 +121,7 @@ function OrderProductComponent({ orderItem, listChecked, setListChecked }) {
           </Box>
         </Grid>
         <Grid item xs={4} sx={styleTitleHeader}>
-          <Typography>{formatNumber(orderItem?.price * orderItem?.amount)}đ</Typography>
+          <Typography>{Number((orderItem?.price * orderItem?.amount) / 100000).toLocaleString()}đ</Typography>
         </Grid>
         <Grid
           item

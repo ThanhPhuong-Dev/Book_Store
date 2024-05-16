@@ -106,7 +106,7 @@ function AdminProduct() {
         }}
       >
         <DeleteIcon sx={{ color: '#d63031' }} onClick={() => setOpenRemoveModal(true)}></DeleteIcon>
-        <ModeEditIcon sx={{ color: '#74b9ff' }} onClick={handleEditClick}></ModeEditIcon>
+        {/* <ModeEditIcon sx={{ color: '#74b9ff' }} onClick={handleEditClick}></ModeEditIcon> */}
       </Box>
     );
   };

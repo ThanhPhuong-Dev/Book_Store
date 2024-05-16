@@ -20,7 +20,13 @@ function InputComponent({ label, id, name, value, type, handleChange, width, dis
         value={value}
         type={type}
         name={name}
-        style={{ maxWidth: `${width}`, minWidth: `${width}`, outline: 'none', padding: '12px' }}
+        style={{
+          maxWidth: `${width}`,
+          minWidth: `${width}`,
+          outline: 'none',
+          padding: '12px',
+          border: '1px solid #ccc'
+        }}
         onChange={handleChange}
         disabled={disabled}
       ></input>

@@ -95,13 +95,11 @@ function OrderPage() {
     if (priceMemo < 10.0 && priceMemo > 1) {
       return 10.0;
     } else if (priceMemo > 10.0 && priceMemo < 500.0) {
-      return 20.0;
+      return 200;
     } else if (priceMemo === 0) {
       return 0;
-    } else if (priceMemo > 500.0 && priceMemo < 1000.0) {
-      return 45.0;
     } else {
-      return Number(150.0 + Number(priceMemo) * 0.01);
+      return 450000;
     }
   }, [order]);
 
@@ -260,7 +258,9 @@ function OrderPage() {
                 }}
               >
                 <Typography>Tạm Tính</Typography>
-                <Typography sx={{ fontWeight: 600 }}>{priceMemo && formatNumber(priceMemo)}đ</Typography>
+                <Typography sx={{ fontWeight: 600 }}>
+                  {priceMemo && Number(priceMemo / 100000).toLocaleString()}đ
+                </Typography>
               </Box>
               <Box
                 sx={{
@@ -302,7 +302,7 @@ function OrderPage() {
                 }}
               >
                 <Typography>Phí Giao Hàng</Typography>
-                <Typography sx={{ fontWeight: 600 }}>{deliveryMemo && formatNumber(deliveryMemo * 1000)}đ</Typography>
+                <Typography sx={{ fontWeight: 600 }}>{deliveryMemo && formatNumber(deliveryMemo)}đ</Typography>
               </Box>
               <Box
                 sx={{
@@ -316,7 +316,7 @@ function OrderPage() {
                 <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, mb: 1 }}>Tổng Tiền</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <Typography sx={{ fontWeight: 600, color: 'red', fontSize: '2.4rem' }}>
-                    {totalPriceMemo && formatNumber(totalPriceMemo)}đ
+                    {totalPriceMemo && Number(totalPriceMemo / 100000).toLocaleString()}đ
                   </Typography>
                 </Box>
               </Box>

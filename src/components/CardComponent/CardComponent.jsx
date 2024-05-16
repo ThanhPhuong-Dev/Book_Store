@@ -24,7 +24,7 @@ function CardComponent({ books }) {
           {nameBook}
         </h1>
         <p className="text-2xl text-center text-primary font-bold mt-4">
-          {!isNaN(price) ? Number(price / 1000).toLocaleString() : '120.000'}VND
+          {!isNaN(price) ? Number(price / 100000).toLocaleString() : '120.000'}VND
         </p>
         <div className="flex justify-between mt-4 px-4">
           <span>{bookAuthor}</span>
