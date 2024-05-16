@@ -2,10 +2,16 @@ import HelpIcon from '@mui/icons-material/Help';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Box, Button, Typography } from '@mui/material';
+import { Rate } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import formatNumber from '~/utils/formatNumber';
+import * as Toasts from '~/utils/notification';
 function PurchaseChildren({ product, onClick }) {
   const navigate = useNavigate();
+
+  const handleRate = () => {
+    Toasts.successToast({ title: 'Đánh giá thành công' });
+  };
   return (
     <Box sx={{ mt: 4 }}>
       <Box
@@ -81,6 +87,9 @@ function PurchaseChildren({ product, onClick }) {
             >
               <Typography>Phân loại</Typography>
               <Typography>x{product?.amount}</Typography>
+              <button onClick={handleRate}>
+                <Rate allowHalf />
+              </button>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>

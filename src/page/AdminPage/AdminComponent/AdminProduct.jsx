@@ -62,6 +62,7 @@ function AdminProduct() {
     image: ''
   });
   const userAccess = localStorage.getItem('access_token');
+
   const styleModal = {
     position: 'absolute',
     top: '50%',
@@ -78,7 +79,7 @@ function AdminProduct() {
   const fetchGetDataProduct = async () => {
     setLoading(true);
     try {
-      const res = await ProductServices.getAllProduct(280000);
+      const res = await ProductServices.getAllProduct(80018);
       setLoading(false);
       return res;
     } catch (error) {
@@ -105,8 +106,8 @@ function AdminProduct() {
           }
         }}
       >
+        <ModeEditIcon sx={{ color: '#74b9ff' }} onClick={handleEditClick}></ModeEditIcon>
         <DeleteIcon sx={{ color: '#d63031' }} onClick={() => setOpenRemoveModal(true)}></DeleteIcon>
-        {/* <ModeEditIcon sx={{ color: '#74b9ff' }} onClick={handleEditClick}></ModeEditIcon> */}
       </Box>
     );
   };
@@ -136,15 +137,11 @@ function AdminProduct() {
 
   const handleCloseDrawer = () => {
     setStateUpdateProduct({
-      name: '',
-      type: '',
-      countInStock: '',
-      price: '',
-      description: '',
-      rating: '',
-      location: '',
-      discount: '',
-      sold: '',
+      Publisher: '',
+      bookTitle: '',
+      bookAuthor: '',
+      yearPublication: '',
+      ISBN: '',
       image: ''
     });
     setOpenDrawer(false);
@@ -176,18 +173,22 @@ function AdminProduct() {
   };
   const fetchDataProductDetail = async () => {
     const res = await ProductServices.getProductDetails(selectedRows);
+    const {
+      ISBN,
+      'Book-Title': bookTitle,
+      'Book-Author': bookAuthor,
+      'Year-Of-Publication': yearPublication,
+      Publisher,
+      'Image-URL-L': image
+    } = res.data;
     if (res?.data) {
       setStateUpdateProduct({
-        name: res?.data.name || '',
-        type: res?.data.type || '',
-        countInStock: res?.data.countInStock || '',
-        price: res?.data.price || '',
-        description: res?.data.description || '',
-        rating: res?.data.rating || '',
-        location: res?.data.location || '',
-        discount: res?.data.discount || '',
-        sold: res?.data.sold || '',
-        image: res?.data.image || ''
+        ISBN: ISBN || '',
+        Publisher: Publisher || '',
+        bookTitle: bookTitle || '',
+        yearPublication: yearPublication || '',
+        bookAuthor: bookAuthor || '',
+        image: image || ''
       });
     }
     return res;
@@ -226,26 +227,17 @@ function AdminProduct() {
     e.preventDefault();
     const formdata = new FormData();
     formdata.append('image', stateUpdateProduct.image);
-    if (otherUpdateType) {
-      mutationUpdate.mutate(
-        { ...stateUpdateProduct, type: otherUpdateType, formdata },
-        {
-          onSettled: () => {
-            ProductQuery.refetch();
-          }
+
+    mutationUpdate.mutate(
+      { ...stateUpdateProduct, image: imageForm },
+      {
+        onSettled: () => {
+          ProductQuery.refetch();
         }
-      );
-      setOtherUpdateType('');
-    } else {
-      mutationUpdate.mutate(
-        { ...stateUpdateProduct, formdata },
-        {
-          onSettled: () => {
-            ProductQuery.refetch();
-          }
-        }
-      );
-    }
+      }
+    );
+    setOtherUpdateType('');
+
     setImageForm('');
   };
   //2end---------Xử Lý khi bấm vào chỉnh sửa sản phẩm gồm :hiện thanh drawer và get lại productDetail và submit
@@ -640,85 +632,48 @@ function AdminProduct() {
               </Box>
               <form onSubmit={handleSubmitUpdateForm}>
                 <InputComponent
-                  label="Name"
-                  id="name"
-                  name="name"
-                  value={stateUpdateProduct.name}
+                  disabled={true}
+                  label="ISBN"
+                  id="ISBN"
+                  name="ISBN"
+                  value={stateUpdateProduct.ISBN}
                   handleChange={handleChangeProductDetails}
                   width="350px"
                 ></InputComponent>
 
                 <InputComponent
-                  label="Count In Stock"
-                  id="countInStock"
-                  name="countInStock"
-                  value={stateUpdateProduct.countInStock}
+                  label="bookTitle"
+                  id="bookTitle"
+                  name="bookTitle"
+                  value={stateUpdateProduct.bookTitle}
                   handleChange={handleChangeProductDetails}
                   width="350px"
                 ></InputComponent>
                 <InputComponent
-                  label="Price"
-                  id="price"
-                  name="price"
-                  value={stateUpdateProduct.price}
+                  label="bookAuthor"
+                  id="bookAuthor"
+                  name="bookAuthor"
+                  value={stateUpdateProduct.bookAuthor}
                   handleChange={handleChangeProductDetails}
                   width="350px"
                 ></InputComponent>
                 <InputComponent
-                  label="Description"
-                  id="description"
-                  name="description"
-                  value={stateUpdateProduct.description}
+                  label="yearPublication"
+                  id="yearPublication"
+                  name="yearPublication"
+                  value={stateUpdateProduct.yearPublication}
                   handleChange={handleChangeProductDetails}
                   width="350px"
                 ></InputComponent>
                 <InputComponent
-                  label="Location"
-                  id="description"
-                  name="location"
-                  value={stateUpdateProduct.location}
+                  label="Publisher"
+                  id="Publisher"
+                  name="Publisher"
+                  value={stateUpdateProduct.Publisher}
                   handleChange={handleChangeProductDetails}
                   width="350px"
                 ></InputComponent>
-                <InputComponent
-                  label="Discount"
-                  id="discount"
-                  name="discount"
-                  value={stateUpdateProduct.discount}
-                  handleChange={handleChangeProductDetails}
-                  width="350px"
-                ></InputComponent>
-                <InputComponent
-                  label="Sold"
-                  id="sold"
-                  name="sold"
-                  value={stateUpdateProduct.sold}
-                  handleChange={handleChangeProductDetails}
-                  width="350px"
-                ></InputComponent>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mb: 2,
-                    '& .MuiTypography-root': {
-                      fontSize: '1.4rem',
-                      fontWeight: 600,
-                      mr: 6
-                    },
-                    '& .MuiRating-root': {
-                      fontSize: '2.4rem'
-                    }
-                  }}
-                >
-                  <Typography>Rating</Typography>
-                  <Rating
-                    id="rating"
-                    name="rating"
-                    value={parseInt(stateUpdateProduct.rating)}
-                    onChange={handleChangeProductDetails}
-                  ></Rating>
-                </Box>
+
                 <Box sx={{ display: 'flex', mb: 2, alignItems: 'center' }}>
                   <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, mr: 12 }}>Image</Typography>
                   <UploadComponent handleImageChange={handleImageChangeDetails}></UploadComponent>
@@ -752,25 +707,7 @@ function AdminProduct() {
                     }
                   }}
                 >
-                  <Button
-                    disabled={
-                      stateUpdateProduct.name &&
-                      stateUpdateProduct.countInStock &&
-                      stateUpdateProduct.description &&
-                      stateUpdateProduct.discount &&
-                      stateUpdateProduct.location &&
-                      stateUpdateProduct.price &&
-                      stateUpdateProduct.rating &&
-                      stateUpdateProduct.sold &&
-                      stateUpdateProduct.type &&
-                      stateUpdateProduct.image
-                        ? false
-                        : true
-                    }
-                    variant="contained"
-                    type="submit"
-                    sx={{ backgroundColor: '#34495e' }}
-                  >
+                  <Button variant="contained" type="submit" sx={{ backgroundColor: '#34495e' }}>
                     Cập Nhật
                   </Button>
                 </Box>
