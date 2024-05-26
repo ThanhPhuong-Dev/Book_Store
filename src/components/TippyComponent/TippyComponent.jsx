@@ -10,7 +10,7 @@ function TippyComponent({ children, resultSearch, handleHide, showResult }) {
       placement="top-start"
       onClickOutside={handleHide}
       render={(attrs) => (
-        <div className="box" tabIndex="-1" {...attrs} style={{ width: '700px' }}>
+        <div className="box" tabIndex="-1" {...attrs} style={{ width: '630px' }}>
           <Box
             sx={{
               backgroundColor: 'white',

@@ -23,7 +23,6 @@ function TabsComponent() {
     return res;
   };
   const orderUser = useQuery(['order-user'], fetchOrderUser, { enabled: !!user?.id });
-  console.log('ordeer', orderUser);
   const mutationCancel = useMutationHook((data) => {
     const res = OrderServices.orderCancel(data?.id);
     return res;

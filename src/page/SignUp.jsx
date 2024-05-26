@@ -44,12 +44,14 @@ function SignUp() {
   });
   const { data, isSuccess, isError, error } = mutation;
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data?.status !== 'ERR') {
       navigate('/login');
       Toasts.successToast({ title: 'Đăng ký thành công' });
     } else if (isError) {
-      setDataError(error.response.data.message);
-      Toasts.errorToast({ title: `${error.response.data.message.message}` });
+      setDataError(error?.response?.data?.message);
+      Toasts.errorToast({ title: `${error?.response?.data?.message}` });
+    } else if (data?.status == 'ERR') {
+      Toasts.errorToast({ title: `${data?.message}` });
     }
   }, [isSuccess, isError]);
 
@@ -72,7 +74,7 @@ function SignUp() {
           <div className="w-1/2 px-6">
             <div className="flex flex-col justify-center h-full">
               <Typography className="text-center text-2xl !font-bold" variant="h4">
-                Đăng ký
+                Tạo Tài Khoản
               </Typography>
               <form onSubmit={handleSubmit}>
                 <InputForm
@@ -137,7 +139,7 @@ function SignUp() {
                     }
                   }}
                 >
-                  Đăng Ký
+                  Tạo Tài Khoản
                   {dataError?.status === 'ERR' && (
                     <span
                       style={{

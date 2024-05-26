@@ -12,7 +12,7 @@ export const publicRouter = [
   { path: '/', element: Home, isShowHeader: true },
   { path: '/product-details/:id', element: ProductDetails, isShowHeader: true },
   { path: '/login', element: Login, isShowHeader: false },
-  { path: '/sign-up', element: SignUp, isShowHeader: true },
+  { path: '/sign-up', element: SignUp, isShowHeader: false },
   { path: '/order', element: OrderPage, isShowHeader: true },
   { path: '/payment', element: PaymentPage, isShowHeader: true },
   { path: '/profile', element: ProfileUser, isShowHeader: true },

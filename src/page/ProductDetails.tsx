@@ -15,6 +15,7 @@ import BaseRadio from '~/components/baseRadio/BaseRadio';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrderProduct, orderProductBuy } from '~/redux/Silde/orderProductSlice';
 import * as Toasts from '~/utils/notification';
+import formatNumber from '~/utils/formatNumber';
 
 function ProductDetails() {
   const { id: idBook } = useParams();
@@ -60,8 +61,6 @@ function ProductDetails() {
     'Year-Of-Publication': year,
     ISBN: price
   } = productDetail?.data || {};
-
-  console.log('radio', radio);
 
   useEffect(() => {
     try {
@@ -130,13 +129,19 @@ function ProductDetails() {
             name: bookTitle,
             amount: amount,
             image: imagee,
-            price: !isNaN(price) ? Number(price) : 1200000,
-            product: productDetail?.data._id
+            price: !isNaN(price)
+              ? Number(price / 1000000)
+              : // .split(',')[0]
+                120000,
+            product: productDetail?.data._id,
+            ISBN: productDetail?.data.ISBN
           }
         ])
       );
       navigate('/payment');
     } else {
+      navigate('/payment');
+
       Toasts.errorToast({ title: 'Cập nhập thông tin người dùng' });
     }
   };
@@ -144,8 +149,6 @@ function ProductDetails() {
     if (!user?.id) {
       navigate('/login', { state: location.pathname });
     } else {
-      console.log('rice', price);
-
       dispatch(
         addOrderProduct({
           orderItem: {
@@ -153,9 +156,9 @@ function ProductDetails() {
             amount: amount,
             image: imagee,
             price: !isNaN(price)
-              ? price
+              ? Number(price / 1000000)
               : // .split(',')[0]
-                1200000,
+                120000,
             product: productDetail?.data?._id
           }
         })
@@ -181,7 +184,7 @@ function ProductDetails() {
               <div className="flex items-center justify-between gap-20 py-6 border-b  border-[#ccc]">
                 <p className="text-2xl text-[#2c3e50] font-bold w-[400px]">Tác Giả: {bookAuthor}</p>
                 <p className="text-2xl text-center text-primary font-bold w-full">
-                  Giá: {!isNaN(price) ? Number(price / 100000).toLocaleString() : '120.000'}VND
+                  Giá: {!isNaN(price) ? formatNumber(Number(price / 1000000)) : '120.000'}VND
                 </p>
               </div>
               <div className="flex py-6 items-center">

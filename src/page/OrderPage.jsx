@@ -92,21 +92,20 @@ function OrderPage() {
     return 0;
   }, [order]);
   const deliveryMemo = useMemo(() => {
-    if (priceMemo < 10.0 && priceMemo > 1) {
-      return 10.0;
-    } else if (priceMemo > 10.0 && priceMemo < 500.0) {
+    if (priceMemo < 100 && priceMemo > 500) {
+      return 100;
+    } else if (priceMemo > 1000 && priceMemo < 15000) {
       return 200;
     } else if (priceMemo === 0) {
       return 0;
     } else {
-      return 450000;
+      return Number(42000000 / 1000000);
     }
   }, [order]);
 
   const totalPriceMemo = useMemo(() => {
     return Number(priceMemo) - Number(discountMemo) + Number(deliveryMemo);
   }, [priceMemo, discountMemo, deliveryMemo]);
-  console.log('disdfsadfsdaf', totalPriceMemo);
 
   const handleChangeUpdate = (e) => {
     setUserFormUpdate({
@@ -179,7 +178,7 @@ function OrderPage() {
               </Grid>
               <Grid container item xs={7}>
                 <Grid item xs={4} sx={styleTitleHeader}>
-                  <Typography sx={{}}>Đơn Giá</Typography>
+                  <Typography>Đơn Giá</Typography>
                 </Grid>
                 <Grid item xs={3} sx={styleTitleHeader}>
                   <Typography>Số Lượng</Typography>
@@ -258,9 +257,7 @@ function OrderPage() {
                 }}
               >
                 <Typography>Tạm Tính</Typography>
-                <Typography sx={{ fontWeight: 600 }}>
-                  {priceMemo && Number(priceMemo / 100000).toLocaleString()}đ
-                </Typography>
+                <Typography sx={{ fontWeight: 600 }}>{priceMemo && formatNumber(priceMemo)}đ</Typography>
               </Box>
               <Box
                 sx={{
@@ -302,7 +299,7 @@ function OrderPage() {
                 }}
               >
                 <Typography>Phí Giao Hàng</Typography>
-                <Typography sx={{ fontWeight: 600 }}>{deliveryMemo && formatNumber(deliveryMemo)}đ</Typography>
+                <Typography sx={{ fontWeight: 600 }}>{deliveryMemo && deliveryMemo}.000đ</Typography>
               </Box>
               <Box
                 sx={{
@@ -316,7 +313,7 @@ function OrderPage() {
                 <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, mb: 1 }}>Tổng Tiền</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <Typography sx={{ fontWeight: 600, color: 'red', fontSize: '2.4rem' }}>
-                    {totalPriceMemo && Number(totalPriceMemo / 100000).toLocaleString()}đ
+                    {totalPriceMemo && formatNumber(totalPriceMemo)}đ
                   </Typography>
                 </Box>
               </Box>
