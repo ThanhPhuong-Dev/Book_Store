@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from '../CssComponents/CardComponent.module.scss';
+import formatNumber from '~/utils/formatNumber';
 
 function CardComponent({ books }) {
   const navigate = useNavigate();
@@ -24,7 +25,9 @@ function CardComponent({ books }) {
           {nameBook}
         </h1>
         <p className="text-2xl text-center text-primary font-bold mt-4">
-          {!isNaN(price) ? Number(price / 100000).toLocaleString() : '120.000'}VND
+          {/* {!isNaN(price) ? Number(price / 100000).toLocaleString() : '120.000'} */}
+          {!isNaN(price) ? formatNumber(Number(price / 1000000)) : '120.000'}
+          VND
         </p>
         <div className="flex justify-between mt-4 px-4">
           <span>{bookAuthor}</span>

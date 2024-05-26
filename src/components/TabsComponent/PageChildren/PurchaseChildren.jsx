@@ -3,14 +3,33 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Box, Button, Typography } from '@mui/material';
 import { Rate } from 'antd';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import formatNumber from '~/utils/formatNumber';
 import * as Toasts from '~/utils/notification';
+import * as RatingServices from '~/services/ratingServices';
 function PurchaseChildren({ product, onClick }) {
   const navigate = useNavigate();
-
-  const handleRate = () => {
+  const user = useSelector((state) => state.user);
+  const handleChangeRating = (valueRating) => {
+    const book = product.ISBN;
+    const userID = user.userId;
+    const rating = Number(valueRating * 2);
+    submitRating(userID, book, rating);
     Toasts.successToast({ title: 'Đánh giá thành công' });
+  };
+  const submitRating = async (userID, ISBN, rating) => {
+    const res = await RatingServices.evaluate({
+      userID,
+      ISBN,
+      rating
+    });
+    if (res) {
+      await RatingServices.loadData();
+    } else {
+      Toasts.errorToast({ title: 'Đánh giá thất bại' });
+    }
+    return res;
   };
   return (
     <Box sx={{ mt: 4 }}>
@@ -87,9 +106,9 @@ function PurchaseChildren({ product, onClick }) {
             >
               <Typography>Phân loại</Typography>
               <Typography>x{product?.amount}</Typography>
-              <button onClick={handleRate}>
-                <Rate allowHalf />
-              </button>
+              {/* <button onClick={handleRate}> */}
+              <Rate onChange={handleChangeRating} allowHalf />
+              {/* </button> */}
             </Box>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>

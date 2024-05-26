@@ -141,24 +141,12 @@ function Login() {
                     />
                   </FormControl>
                   <BaseButton label="Đăng Nhập" type="submit"></BaseButton>
-                  <div className="flex gap-4">
-                    <Button variant="outlined" className="w-full h-[40px]">
-                      <Typography className="text-xl font-bold text-blue-600" variant="h6">
-                        FaceBook
-                      </Typography>
-                    </Button>
-                    <Button variant="outlined" className="w-full h-[40px]">
-                      <Typography className="text-x font-bold text-orange-600" variant="h6">
-                        Google
-                      </Typography>
-                    </Button>
-                  </div>
                 </Box>
               </form>
               <div className="flex items-center justify-center mt-4 ">
                 <p className="text-lg text-[#bdc3c7]">Chưa có tài khoản?</p>{' '}
                 <span onClick={() => navigate('/sign-up')} className="text-[#3498db] text-lg underline">
-                  Tạo tài khảon
+                  Tạo tài khoản
                 </span>
               </div>
             </div>

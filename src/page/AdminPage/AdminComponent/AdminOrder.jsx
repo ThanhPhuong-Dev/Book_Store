@@ -42,7 +42,6 @@ function AdminOrder() {
   const { data: dataOrderAll } = userQuery;
 
   const dataRows = dataOrderAll && dataOrderAll?.data;
-  console.log('dataRows', dataRows);
   const columns = [
     {
       field: 'email',

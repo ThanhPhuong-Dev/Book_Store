@@ -95,14 +95,14 @@ function PaymentPage() {
   }, []);
 
   const deliveryMemo = useMemo(() => {
-    if (priceMemo < 10.0 && priceMemo > 1) {
-      return 10.0;
-    } else if (priceMemo > 10.0 && priceMemo < 500.0) {
+    if (priceMemo < 100 && priceMemo > 500) {
+      return 100;
+    } else if (priceMemo > 1000 && priceMemo < 15000) {
       return 200;
     } else if (priceMemo === 0) {
       return 0;
     } else {
-      return 450000;
+      return Number(45000000 / 1000000);
     }
   }, []);
   const checkDelivery = useMemo(() => {
@@ -133,7 +133,6 @@ function PaymentPage() {
     return res;
   });
   const { isLoading, data } = mutationPayment;
-  console.log('data', data);
   const ClickBuyProduct = () => {
     if (user?.name || user?.address || user?.phone || user?.city) {
       mutationPayment.mutate(
@@ -332,7 +331,7 @@ function PaymentPage() {
                       />
                     }
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     disabled={user?.userCoin === undefined || user?.userCoin < totalPriceMemo}
                     label={<Typography sx={{ fontSize: '1.4rem' }}>Thanh Toán PayCoin TPhương </Typography>}
                     control={
@@ -343,7 +342,7 @@ function PaymentPage() {
                         onChange={handleChangePay}
                       />
                     }
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Box>
@@ -378,9 +377,7 @@ function PaymentPage() {
                 }}
               >
                 <Typography>Tạm Tính</Typography>
-                <Typography sx={{ fontWeight: 600 }}>
-                  {priceMemo && Number(priceMemo / 100000).toLocaleString()}đ
-                </Typography>
+                <Typography sx={{ fontWeight: 600 }}>{priceMemo && formatNumber(priceMemo)}đ</Typography>
               </Box>
               <Box
                 sx={{
@@ -423,9 +420,8 @@ function PaymentPage() {
               >
                 <Typography>Phí Giao Hàng</Typography>
                 <Typography sx={{ fontWeight: 600 }}>
-                  {deliveryMemo &&
-                    (delivery === 'FAST' ? formatNumber(deliveryMemo + 26000) : formatNumber(deliveryMemo))}
-                  đ
+                  {deliveryMemo && (delivery === 'FAST' ? formatNumber(deliveryMemo + 26) : formatNumber(deliveryMemo))}
+                  .000đ
                 </Typography>
               </Box>
               <Box
@@ -440,7 +436,7 @@ function PaymentPage() {
                 <Typography sx={{ fontSize: '1.4rem', fontWeight: 600, mb: 1 }}>Tổng Tiền</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                   <Typography sx={{ fontWeight: 600, color: 'red', fontSize: '2.4rem' }}>
-                    {totalPriceMemo && Number(totalPriceMemo / 100000).toLocaleString()}đ
+                    {totalPriceMemo && formatNumber(totalPriceMemo)}đ
                   </Typography>
                 </Box>
               </Box>

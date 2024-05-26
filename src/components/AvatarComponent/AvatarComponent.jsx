@@ -25,7 +25,6 @@ function AvatarComponent({ user }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const handleLogOut = async () => {
     setLoading(true);
     localStorage.removeItem('access_token');
