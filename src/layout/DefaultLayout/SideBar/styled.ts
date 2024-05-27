@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     border-radius: 50%;
     border: 1px solid #f6f6f6;
     box-shadow: 0px 0px 10px 0px #0a007a1a;
-    z-index: 10;
+    z-index: 1000;
     background-color: white;
     display: flex;
     align-items: center;

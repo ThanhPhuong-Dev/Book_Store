@@ -102,7 +102,7 @@ function HeaderComponent() {
                 size="small"
                 fullWidth
                 id="outlined-search"
-                label="Search Product"
+                label="Tìm kiếm sách"
                 type="search"
                 onChange={handleSearch}
                 onFocus={handleFocus}
@@ -249,6 +249,7 @@ function HeaderComponent() {
                         </Typography>
                         {orderProduct?.orderItems?.map((order) => (
                           <Box
+                            // onClick={() => navigate(`/product-details/${order?.product}`)}
                             key={order.product}
                             sx={{
                               display: 'flex',

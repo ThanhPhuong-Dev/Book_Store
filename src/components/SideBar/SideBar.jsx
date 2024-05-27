@@ -105,7 +105,7 @@ function SideBar() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#34495e', boxShadow: '1px 1px 1px #ccc' }}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#27ae61', boxShadow: '1px 1px 1px #ccc' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -121,7 +121,7 @@ function SideBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h5" noWrap component="div">
-            Quản Lý Người Dùng
+            Quản Lý Hệ Thống
           </Typography>
           <Box
             onClick={() => navigate('/')}
@@ -179,9 +179,9 @@ function SideBar() {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-            <Box sx={{ width: '60px', height: '60px' }}>
+            {/* <Box sx={{ width: '60px', height: '60px' }}>
               <img src={logo} alt="" style={{ width: '100%', height: '100%' }} />
-            </Box>
+            </Box> */}
             <Typography
               variant="h4"
               sx={{
