@@ -69,12 +69,12 @@ function ProfileUser() {
   const mutation = useMutationHook((data) => {
     return UserServices.updateUser(userId, data);
   });
-  const { isSuccess, isError, error, isLoading } = mutation;
+  const { isSuccess, isError, error } = mutation;
 
   useEffect(() => {
     if (isSuccess) {
       navigate('/');
-      dispatch(updateUser({ name, email, phone, avatar, address, gender, city }));
+      dispatch(updateUser({ name, email, phone, avatar, address, gender, city, isAdmin: user?.isAdmin }));
       Toast.successToast({ title: 'Cập Nhật Thành Công' });
     } else if (isError) {
       Toast.errorToast({ title: 'Cập Nhật Không Thành Công ' });
