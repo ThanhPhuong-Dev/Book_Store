@@ -143,6 +143,10 @@ function OrderPage() {
   const ClickBuyProduct = () => {
     if (listChecked?.length < 1) {
       Toast.errorToast({ title: 'Hãy Chọn Sản Phẩm' });
+    } else if (!user?.name || !user?.city || !user?.address || !user?.phone) {
+      navigate('/profile');
+
+      Toast.errorToast({ title: 'Cập nhập thông tin người dùng' });
     } else {
       navigate('/payment');
     }
