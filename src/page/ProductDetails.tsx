@@ -140,7 +140,7 @@ function ProductDetails() {
       );
       navigate('/payment');
     } else {
-      navigate('/payment');
+      navigate('/profile');
 
       Toasts.errorToast({ title: 'Cập nhập thông tin người dùng' });
     }
@@ -159,7 +159,8 @@ function ProductDetails() {
               ? Number(price / 1000000)
               : // .split(',')[0]
                 120000,
-            product: productDetail?.data?._id
+            product: productDetail?.data?._id,
+            ISBN: productDetail?.data.ISBN
           }
         })
       );
