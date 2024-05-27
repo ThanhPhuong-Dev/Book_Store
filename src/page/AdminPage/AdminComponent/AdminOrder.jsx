@@ -52,7 +52,7 @@ function AdminOrder() {
     // },
     {
       field: 'orderItems',
-      headerName: 'Đơn Hàng',
+      headerName: 'Order',
       width: 100,
       valueGetter: (params) => {
         return params?.length;
@@ -77,7 +77,7 @@ function AdminOrder() {
           : '';
       }
     },
-    { field: 'createdAt', headerName: 'Thời Gian Mua', width: 230 }
+    { field: 'createdAt', headerName: 'Time', width: 230 }
   ];
   const handleClickTable = (e) => {
     setUserId(e.row);
