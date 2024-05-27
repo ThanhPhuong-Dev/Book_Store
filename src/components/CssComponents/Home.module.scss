@@ -3,6 +3,7 @@
 .container_children {
   margin-top: $header-height;
   // height: calc(100vh - $header-height);
+  // overflow-y: auto;
 }
 
 .wrapper {

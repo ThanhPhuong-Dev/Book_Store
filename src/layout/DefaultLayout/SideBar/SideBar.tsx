@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { Wrapper } from './styled';
 import { HomeOutlined, LeftOutlined, PieChartOutlined, RightOutlined } from '@ant-design/icons';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 const items = [
   {
     key: '1',

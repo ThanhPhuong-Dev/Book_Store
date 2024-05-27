@@ -1,30 +1,19 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Rating,
-  Select,
-  Typography
-} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import TableComponent from '~/components/TableComponent/TableComponent';
-import { useEffect, useState } from 'react';
-import UploadComponent from '~/components/InputComponent/UploadComponent/UploadComponent';
 import CloseIcon from '@mui/icons-material/Close';
-import * as ProductServices from '~/services/productService';
-import { useMutationHook } from '~/hooks/useMutationHook';
-import { useQuery } from 'react-query';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import DrawerComponent from '~/components/DrawerComponent/DrawerComponent';
-import * as Toasts from '~/utils/notification';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import InputComponent from '~/components/InputComponent/InputComponent';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { Box, Button, IconButton, Modal, Typography } from '@mui/material';
 import { Spin } from 'antd';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import DrawerComponent from '~/components/DrawerComponent/DrawerComponent';
+import InputComponent from '~/components/InputComponent/InputComponent';
+import UploadComponent from '~/components/InputComponent/UploadComponent/UploadComponent';
+import TableComponent from '~/components/TableComponent/TableComponent';
+import { useMutationHook } from '~/hooks/useMutationHook';
+import * as ProductServices from '~/services/productService';
+import * as Toasts from '~/utils/notification';
 
 function AdminProduct() {
   const [openModal, setOpenModal] = useState(false);
@@ -35,7 +24,6 @@ function AdminProduct() {
   const [loading, setLoading] = useState(false);
   const [selectedRows, setSelectedRows] = useState('');
   const [selectedName, setSelectedName] = useState('');
-  const [selectedType, setSelectedType] = useState('');
   const [otherImage, setOtherImage] = useState('');
   const [imageForm, setImageForm] = useState('');
   const [otherType, setOtherType] = useState('');
@@ -79,7 +67,7 @@ function AdminProduct() {
   const fetchGetDataProduct = async () => {
     setLoading(true);
     try {
-      const res = await ProductServices.getAllProduct(80018);
+      const res = await ProductServices.getAllProduct(10000);
       setLoading(false);
       return res;
     } catch (error) {
@@ -210,26 +198,26 @@ function AdminProduct() {
   //Xử lý submit update dữ liệu vào data bằng useMutation
 
   const mutationUpdate = useMutationHook(async (data) => {
-    return await ProductServices.updateProduct(selectedRows, userAccess, data);
+    const res = await ProductServices.updateProduct(selectedRows, data);
+    return res;
   });
 
-  const { isLoading: loadingUpdate, isSuccess: successUpdate, isError: errorUpdate, data } = mutationUpdate;
-
+  const { isSuccess: successUpdate, isError: errorUpdate, data } = mutationUpdate;
   useEffect(() => {
-    if (successUpdate && data?.status === 'OK') {
+    if (successUpdate && data?.status !== 'ERR') {
       setOpenDrawer(false);
       Toasts.successToast({ title: 'Cập nhật thành công ' });
     } else if (errorUpdate) {
       Toasts.errorToast({ title: 'Cập nhật thất bại ' });
+    } else if (data?.status === 'ERR') {
+      Toasts.errorToast({ title: data?.message });
     }
-  }, [successUpdate]);
+  }, [successUpdate, errorUpdate]);
   const handleSubmitUpdateForm = (e) => {
     e.preventDefault();
-    const formdata = new FormData();
-    formdata.append('image', stateUpdateProduct.image);
 
     mutationUpdate.mutate(
-      { ...stateUpdateProduct, image: imageForm },
+      { ...stateUpdateProduct },
       {
         onSettled: () => {
           ProductQuery.refetch();
@@ -367,10 +355,9 @@ function AdminProduct() {
     return ProductServices.createProduct(data);
   });
 
-  const { isError, isSuccess, error, isLoading: loadingNew } = mutation;
-
+  const { isError, isSuccess, error, isLoading: loadingNew, data: dataCreate } = mutation;
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && dataCreate?.status !== 'ERR') {
       setOpenModal(false);
       setStateProduct({
         name: '',
@@ -387,6 +374,8 @@ function AdminProduct() {
       Toasts.successToast({ title: 'Tạo Sản Phẩm Mới Thành Công' });
     } else if (isError) {
       Toasts.errorToast({ title: 'Lỗi Sản Phẩm' });
+    } else if (dataCreate?.status == 'ERR') {
+      Toasts.errorToast({ title: dataCreate?.message });
     }
   }, [isSuccess, isError]);
 

@@ -13,17 +13,8 @@ export const createProduct = async (data) => {
   return res.data;
 };
 
-export const updateProduct = async (id, access_token, data) => {
-  const res = await axios.put(
-    `${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/book/update_book/${id}`,
-    { ...data },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        access_token: `Beare ${access_token}`
-      }
-    }
-  );
+export const updateProduct = async (id, data) => {
+  const res = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/book/update_book/${id}`, { ...data });
   return res.data;
 };
 

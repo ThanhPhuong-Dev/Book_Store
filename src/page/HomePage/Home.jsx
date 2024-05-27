@@ -6,7 +6,7 @@ function Home() {
   const [selectedKeys, setSelectedKeys] = useState('1');
 
   return (
-    <div className="flex-1 flex ">
+    <div className="flex-1 flex">
       <SideBar selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys}></SideBar>
       <div className="flex-1 overflow-y-auto">
         <Content selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys}></Content>

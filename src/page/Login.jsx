@@ -52,9 +52,8 @@ function Login() {
   });
 
   const { data, isSuccess, isError, error } = mutation;
-
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data?.status !== 'ERR') {
       if (location?.state) {
         navigate(location?.state);
       } else {
@@ -72,6 +71,8 @@ function Login() {
     } else if (isError) {
       Toasts.errorToast({ title: 'Đăng Nhập Thất Bại' });
       setDataError(error.response.data.message);
+    } else if (data?.status == 'ERR') {
+      Toasts.errorToast({ title: `${data?.message}` });
     }
   }, [isSuccess, isError]);
 

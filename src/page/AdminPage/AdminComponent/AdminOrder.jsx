@@ -20,17 +20,6 @@ function AdminOrder() {
     avatar: '',
     city: ''
   });
-  const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    maxWidth: 550,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4
-  };
 
   const fetchOrderAll = async () => {
     const res = OrderServices.getAllOrder();
@@ -48,12 +37,7 @@ function AdminOrder() {
       headerName: 'Email',
       width: 300
     },
-    // {
-    //   field: 'shippingAddress',
-    //   headerName: 'Name',
-    //   width: 200,
-    //   valueGetter: (params) => params?.fullName || ''
-    // },
+
     {
       field: 'shippingAddress',
       headerName: 'name',
@@ -77,14 +61,14 @@ function AdminOrder() {
     {
       field: 'totalPrice',
       headerName: 'Total-Price',
-      width: 300
+      width: 150
       // valueGetter: (params) => params?.row?.totalPrice || ''
     },
 
     {
       field: 'paymentMethod',
       headerName: 'PaymentMethod',
-      width: 500,
+      width: 200,
       valueGetter: (params) => {
         return params === 'later_money'
           ? 'Thanh toán tiền mặt khi nhận hàng'
@@ -92,8 +76,8 @@ function AdminOrder() {
           ? 'Thanh toán bằng PayCoin'
           : '';
       }
-    }
-    // { field: 'createdAt', headerName: 'Thời Gian Mua', width: 230 }
+    },
+    { field: 'createdAt', headerName: 'Thời Gian Mua', width: 230 }
   ];
   const handleClickTable = (e) => {
     setUserId(e.row);

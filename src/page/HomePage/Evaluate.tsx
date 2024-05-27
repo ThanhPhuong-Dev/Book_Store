@@ -61,6 +61,8 @@ function Evaluate() {
       setloading(false);
     }, 1500);
   };
+  console.log('dataa', dataMongo);
+
   return (
     <Box>
       <Spin spinning={loading}>
