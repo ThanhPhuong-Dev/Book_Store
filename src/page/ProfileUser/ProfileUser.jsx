@@ -118,6 +118,7 @@ function ProfileUser() {
                 width="400px"
               ></InputComponent>
               <InputComponent
+                disabled={true}
                 label="Email"
                 id="email"
                 value={email}
